@@ -1,2 +1,6 @@
-# syntax-tree
-Syntax Tree
+# Abstract Syntax Tree
+Supported operations:
+- and
+- or
+- not
+- ()
