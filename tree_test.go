@@ -32,25 +32,25 @@ func getTestCases() []testCase {
 	return []testCase{
 		{
 			values:     []string{"(", "(", "A", "or", "B", ")", "and", "(", "C", "or", "D", ")", ")", "or", "not", "(", "E", "or", "F", "and", "G", ")"},
-			expression: "(((A or B) and (C or D)) or not (E or (F and G)))",
+			expression: "((A or B) and (C or D)) or not (E or F and G)",
 			tree: &Tree{
 				Root: &Node{
 					Operator: OperatorOr,
 					Left: &Node{
 						Operator: OperatorAnd,
 						Left: &Node{
-							Operator: OperatorOr,
-							Left:     &Node{Key: "A"},
-							Right:    &Node{Key: "B"},
-							strong:   true,
+							Operator:   OperatorOr,
+							Left:       &Node{Key: "A"},
+							Right:      &Node{Key: "B"},
+							InBrackets: true,
 						},
 						Right: &Node{
-							Operator: OperatorOr,
-							Left:     &Node{Key: "C"},
-							Right:    &Node{Key: "D"},
-							strong:   true,
+							Operator:   OperatorOr,
+							Left:       &Node{Key: "C"},
+							Right:      &Node{Key: "D"},
+							InBrackets: true,
 						},
-						strong: true,
+						InBrackets: true,
 					},
 					Right: &Node{
 						Operator: OperatorNot,
@@ -62,7 +62,7 @@ func getTestCases() []testCase {
 								Left:     &Node{Key: "F"},
 								Right:    &Node{Key: "G"},
 							},
-							strong: true,
+							InBrackets: true,
 						},
 					},
 				},

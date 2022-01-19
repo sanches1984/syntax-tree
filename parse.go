@@ -12,7 +12,7 @@ func parse(expression []string) (*Node, int, error) {
 			if err != nil {
 				return nil, 0, err
 			}
-			x.strong = true
+			x.InBrackets = true
 			i += v + 1
 			if n.IsEmpty() {
 				n = x
@@ -29,12 +29,12 @@ func parse(expression []string) (*Node, int, error) {
 			n.pushNot(expression[i])
 			cur = n.Right
 		case OperatorAnd:
-			if !n.strong {
-				n.pushRight(expression[i])
-				cur = n.Right
-			} else {
+			if n.InBrackets || n.Left == nil {
 				n = n.pushLeft(expression[i])
 				cur = n
+			} else {
+				n.pushRight(expression[i])
+				cur = n.Right
 			}
 		case OperatorOr:
 			n = n.pushLeft(expression[i])

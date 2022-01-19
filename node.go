@@ -3,12 +3,11 @@ package syntax_tree
 import "fmt"
 
 type Node struct {
-	Operator string
-	Key      string
-	Left     *Node
-	Right    *Node
-
-	strong bool
+	Operator   string
+	Key        string
+	Left       *Node
+	Right      *Node
+	InBrackets bool
 }
 
 func (n Node) IsEmpty() bool {
@@ -56,5 +55,9 @@ func (n Node) print() string {
 	if n.Operator == OperatorNot {
 		return fmt.Sprintf("%s %s", n.Operator, right)
 	}
-	return fmt.Sprintf("(%s %s %s)", left, n.Operator, right)
+	if n.InBrackets {
+		return fmt.Sprintf("(%s %s %s)", left, n.Operator, right)
+	}
+
+	return fmt.Sprintf("%s %s %s", left, n.Operator, right)
 }
